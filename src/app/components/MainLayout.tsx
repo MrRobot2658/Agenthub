@@ -47,8 +47,6 @@ const navigationItems = [
   { icon: Puzzle, label: '应用中心', path: '/app-center', badge: null },
   { icon: Building2, label: '组织管理', path: '/organization', badge: null },
   { icon: Shield, label: '权限管理', path: '/permissions', badge: null },
-  { icon: CreditCard, label: '账户额度', path: '/billing', badge: 'Pro' },
-  { icon: Bell, label: '消息中心', path: '/notifications', badge: '3' },
 ];
 
 // 模拟用户信息
@@ -101,8 +99,29 @@ export function MainLayout({ children }: MainLayoutProps) {
             </div>
           </div>
 
-          {/* Right: User Info */}
-          <DropdownMenu>
+          {/* Right: Notification Center + User Info */}
+          <div className="flex items-center gap-3">
+            {/* Notification Center */}
+            <Link
+              to="/notifications"
+              className={cn(
+                "relative flex items-center justify-center w-10 h-10 rounded-lg transition-colors",
+                location.pathname === '/notifications'
+                  ? "bg-primary text-primary-foreground"
+                  : "hover:bg-muted text-foreground"
+              )}
+            >
+              <Bell className="w-5 h-5" />
+              <Badge 
+                variant="destructive" 
+                className="absolute -top-1 -right-1 h-5 w-5 flex items-center justify-center p-0 text-xs"
+              >
+                3
+              </Badge>
+            </Link>
+
+            {/* User Info */}
+            <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <button className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-muted transition-colors">
                 <div className="w-9 h-9 rounded-full bg-primary/10 flex items-center justify-center">
@@ -126,13 +145,24 @@ export function MainLayout({ children }: MainLayoutProps) {
                 </div>
               </DropdownMenuLabel>
               <DropdownMenuSeparator />
-              <DropdownMenuItem>
-                <User className="mr-2 w-4 h-4" />
-                个人资料
+              <DropdownMenuItem asChild>
+                <Link to="/user" className="flex items-center">
+                  <User className="mr-2 w-4 h-4" />
+                  个人资料
+                </Link>
               </DropdownMenuItem>
-              <DropdownMenuItem>
-                <Settings className="mr-2 w-4 h-4" />
-                账户设置
+              <DropdownMenuItem asChild>
+                <Link to="/billing" className="flex items-center">
+                  <CreditCard className="mr-2 w-4 h-4" />
+                  账户额度
+                  <Badge variant="secondary" className="ml-auto text-xs">Pro</Badge>
+                </Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem asChild>
+                <Link to="/settings" className="flex items-center">
+                  <Settings className="mr-2 w-4 h-4" />
+                  账户设置
+                </Link>
               </DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuItem className="text-destructive">
@@ -141,6 +171,7 @@ export function MainLayout({ children }: MainLayoutProps) {
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
+          </div>
         </div>
       </header>
 
