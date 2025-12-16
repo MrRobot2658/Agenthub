@@ -395,7 +395,7 @@ export function AppCenterPage() {
               <Card key={app.id} className="hover:shadow-lg transition-shadow">
                 <CardHeader>
                   <div className="flex items-start justify-between mb-3">
-                    <div className="w-12 h-12 rounded-lg bg-muted flex items-center justify-center text-2xl">
+                    <div className="w-16 h-16 rounded-lg bg-muted flex items-center justify-center text-4xl">
                       {app.icon}
                     </div>
                     <Badge variant={statusBadge.variant}>
